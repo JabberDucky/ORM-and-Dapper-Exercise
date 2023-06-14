@@ -16,7 +16,7 @@ namespace ORM_Dapper
         {
             _conn = conn;
         }
-       
+
         public IEnumerable<Product> GetAllProducts()
         {
             return _conn.Query<Product>("SELECT * FROM products;");
@@ -44,6 +44,13 @@ namespace ORM_Dapper
                         onSale = product.OnSale, 
                         stock = product.StockLevel
                     });
+        }
+
+        public void DeleteProduct(int id)
+        {
+            _conn.Execute("DELETE FROM sales WHERE ProductID = @id;", new {id});
+            _conn.Execute("DELETE FROM reviews WHERE ProductID = @id;", new { id });
+            _conn.Execute("DELETE FROM products WHERE ProductID = @id;", new { id });
         }
     }
 }
