@@ -27,6 +27,18 @@ IDbConnection conn = new MySqlConnection(connString);
 #endregion
 
 var productRepo = new DapperProductRepo(conn);
+
+var productToUpdate = productRepo.GetProduct(941);
+
+productToUpdate.Name = "UPDATED!!!";
+productToUpdate.Price = 23.99;
+productToUpdate.CategoryID = 1;
+productToUpdate.OnSale = false;
+productToUpdate.StockLevel = 53;
+
+productRepo.UpdateProduct(productToUpdate);
+
+
 var products = productRepo.GetAllProducts();
 
 foreach (var product in products)
